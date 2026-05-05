@@ -43,7 +43,7 @@ export default function GroupCard({ group, index }) {
       </div>
 
       {unsettledAmount > 0 ? (
-        <div style={{ textAlign: 'right' }}>
+        <div className="right-info">
           <div className="title" style={{ color: C.RED }}>
             {formatCurrency(unsettledAmount)}
           </div>

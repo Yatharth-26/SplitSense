@@ -3,7 +3,7 @@ import { COLORS } from '../utils/constants'
 
 const C = COLORS
 
-export default function Navbar() {
+export default function Navbar({ theme, toggleTheme }) {
   const navigate = useNavigate()
   const location = useLocation()
   const current = location.pathname
@@ -20,6 +20,18 @@ export default function Navbar() {
       </div>
 
       <div className="row">
+        <button
+          onClick={toggleTheme}
+          className="pill-button"
+          style={{
+            background: C.CARD,
+            color: C.TEXT,
+            border: `1px solid ${C.BORDER}`,
+          }}
+        >
+          {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+        </button>
+
         {tabs.map(t => {
           const active = current === t.path
 

@@ -45,7 +45,7 @@ export default function BalanceCard({ member, balance, group, index }) {
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div className="right-info row">
         <div style={{ textAlign: 'right' }}>
           <div className="title" style={{ color: balanceColor }}>
             {balanceText}

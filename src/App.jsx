@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { GroupProvider }    from './context/GroupContext'
 import Navbar               from './components/Navbar'
@@ -11,14 +12,14 @@ import ShameWall            from './pages/ShameWall'
 import { useGroups }        from './context/GroupContext'
 
 
-function AppShell() {
+function AppShell({ theme, toggleTheme }) {
   const { showAddExp, showAddGrp, roastTarget } = useGroups()
 
   return (
     <>
-      <Navbar />
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-            <div style={{ maxWidth: 860, margin: '0 auto', padding: '24px 16px' }}>
+      <div className="page">
         <Routes>
           <Route path="/"             element={<Dashboard />} />
           <Route path="/group/:id"    element={<GroupPage />} />
@@ -26,20 +27,30 @@ function AppShell() {
         </Routes>
       </div>
 
-            {showAddExp   && <AddExpenseModal />}
+      {showAddExp   && <AddExpenseModal />}
       {showAddGrp   && <AddGroupModal  />}
       {roastTarget  && <RoastModal     />}
 
-            <Toast />
+      <Toast />
     </>
   )
 }
 
 export default function App() {
+  const [theme, setTheme] = useState('dark')
+
+  useEffect(() => {
+    document.body.dataset.theme = theme
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
   return (
     <BrowserRouter>
       <GroupProvider>
-        <AppShell />
+        <AppShell theme={theme} toggleTheme={toggleTheme} />
       </GroupProvider>
     </BrowserRouter>
   )

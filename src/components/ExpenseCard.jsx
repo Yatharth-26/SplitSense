@@ -28,7 +28,7 @@ export default function ExpenseCard({ expense, group, index }) {
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
+        <div className="right-info">
           <div className="title">
             {formatCurrency(expense.amount)}
           </div>

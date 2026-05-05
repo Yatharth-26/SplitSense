@@ -47,7 +47,7 @@ export default function GroupStats({ group }) {
 
   return (
     <div style={{ display: 'grid', gap: 12 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <div className="stats-grid two">
         <div className="card">
           <div className="muted">
             ₹ Total Spent

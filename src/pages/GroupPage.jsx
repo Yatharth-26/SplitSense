@@ -47,12 +47,7 @@ export default function GroupPage() {
 
   return (
     <div className="fade-up">
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        marginBottom: 22,
-      }}>
+      <div className="group-header">
         <button
           onClick={() => navigate('/')}
           style={{
@@ -106,15 +101,7 @@ export default function GroupPage() {
         </button>
       </div>
 
-      <div style={{
-        display: 'flex',
-        gap: 3,
-        marginBottom: 20,
-        background: C.CARD,
-        padding: 4,
-        borderRadius: 12,
-        width: 'fit-content',
-      }}>
+      <div className="tabs">
         {TABS.map(t => (
           <button
             key={t.id}

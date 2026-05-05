@@ -31,23 +31,13 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: 10,
-        marginBottom: 28,
-      }}>
+      <div className="stats-grid">
         <StatCard symbol="₹" value={formatCurrency(totalUnsettled)} label="Unsettled" color={C.RED} />
         <StatCard symbol="👥" value={groups.length} label="Groups" color={C.PURPLE} />
         <StatCard symbol="🧾" value={totalExpenses} label="Expenses" color={C.GREEN} />
       </div>
 
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 12,
-      }}>
+      <div className="section-header">
         <h2 style={{
           fontFamily: "'Syne', sans-serif",
           fontWeight: 700,
