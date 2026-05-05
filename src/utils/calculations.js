@@ -1,12 +1,14 @@
 import { CATEGORIES } from './constants'
 
-export function calcBalances(group) {
+export function calculateMemberBalances(group) {
   const balances = {}
 
+  // Pehle har member ka balance zero se start
   for (const member of group.members) {
     balances[member] = 0
   }
 
+  // Har expense ko sab members me split karte hai
   for (const expense of group.expenses) {
     const share = expense.amount / group.members.length
 
@@ -22,10 +24,11 @@ export function calcBalances(group) {
   return balances
 }
 
-export function getTotalUnsettled(group) {
-  const balances = calcBalances(group)
+export function calculateTotalPendingAmount(group) {
+  const balances = calculateMemberBalances(group)
   let total = 0
 
+  // Negative balance matlab kisi ko pay karna hai
   for (const balance of Object.values(balances)) {
     if (balance < 0) {
       total = total + Math.abs(balance)
@@ -35,9 +38,10 @@ export function getTotalUnsettled(group) {
   return total
 }
 
-export function getPendingCount(group) {
+export function countPendingPayments(group) {
   let count = 0
 
+  // False settled value ka matlab payment pending hai
   for (const expense of group.expenses) {
     for (const settled of Object.values(expense.settled)) {
       if (!settled) {
@@ -49,11 +53,12 @@ export function getPendingCount(group) {
   return count
 }
 
-export function formatCurrency(amount) {
+export function showRupees(amount) {
   return `₹${Math.abs(Math.round(amount)).toLocaleString('en-IN')}`
 }
 
-export function getCatEmoji(id) {
+export function findCategoryEmoji(id) {
+  // Category id se matching emoji dhundte hai
   const category = CATEGORIES.find(c => c.id === id)
 
   if (category) {

@@ -1,7 +1,7 @@
 import { useGroups } from '../context/GroupContext'
 import { COLORS } from '../utils/constants'
-import { getPersonality } from '../utils/personality'
-import { formatCurrency } from '../utils/calculations'
+import { findMemberPersonality } from '../utils/personality'
+import { showRupees } from '../utils/calculations'
 
 const C = COLORS
 
@@ -43,7 +43,7 @@ function getMembersForWall(groups) {
   for (const group of groups) {
     for (const member of group.members) {
       if (!addedMembers[member]) {
-        const personality = getPersonality(member, group.expenses)
+        const personality = findMemberPersonality(member, group.expenses)
 
         members.push({
           memberName: member,
@@ -160,7 +160,7 @@ export default function ShameWall() {
                   fontSize: 13,
                   marginTop: 4,
                 }}>
-                  {formatCurrency(member.owed)} owed
+                  {showRupees(member.owed)} owed
                 </div>
               )}
             </div>

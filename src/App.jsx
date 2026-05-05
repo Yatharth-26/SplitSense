@@ -17,6 +17,7 @@ function AppShell({ theme, toggleTheme }) {
 
   return (
     <>
+      {/* Navbar ko theme button ka data yaha se milta hai */}
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
       <div className="page">
@@ -31,6 +32,7 @@ function AppShell({ theme, toggleTheme }) {
       {showAddGrp   && <AddGroupModal  />}
       {roastTarget  && <RoastModal     />}
 
+      {/* Toast chhota popup message dikhata hai */}
       <Toast />
     </>
   )
@@ -39,10 +41,12 @@ function AppShell({ theme, toggleTheme }) {
 export default function App() {
   const [theme, setTheme] = useState('dark')
 
+  // Theme ko body par lagate hai, phir CSS colors change hote hai
   useEffect(() => {
     document.body.dataset.theme = theme
   }, [theme])
 
+  // Button click par dark aur light mode switch hota hai
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }

@@ -1,5 +1,5 @@
 import { COLORS } from '../utils/constants'
-import { formatCurrency, getCatEmoji } from '../utils/calculations'
+import { showRupees, findCategoryEmoji } from '../utils/calculations'
 import { useGroups } from '../context/GroupContext'
 
 const C = COLORS
@@ -18,7 +18,7 @@ export default function ExpenseCard({ expense, group, index }) {
     >
       <div className="space-between" style={{ alignItems: 'flex-start' }}>
         <div className="row">
-          <span style={{ fontSize: 20 }}>{getCatEmoji(expense.category)}</span>
+          <span style={{ fontSize: 20 }}>{findCategoryEmoji(expense.category)}</span>
 
           <div>
             <div style={{ fontWeight: 600, fontSize: 14 }}>{expense.name}</div>
@@ -30,10 +30,10 @@ export default function ExpenseCard({ expense, group, index }) {
 
         <div className="right-info">
           <div className="title">
-            {formatCurrency(expense.amount)}
+            {showRupees(expense.amount)}
           </div>
           <div className="muted">
-            {formatCurrency(share)}/person
+            {showRupees(share)}/person
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function ExpenseCard({ expense, group, index }) {
                   cursor: settled ? 'default' : 'pointer',
                 }}
               >
-                {settled ? `✓ ${member}` : `${member} owes ${formatCurrency(share)}`}
+                {settled ? `✓ ${member}` : `${member} owes ${showRupees(share)}`}
               </button>
             )
           })}

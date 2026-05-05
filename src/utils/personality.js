@@ -1,14 +1,16 @@
 import { COLORS } from './constants'
 
-function makePersonality(pName, emoji, color, score, tagline) {
+function createPersonality(pName, emoji, color, score, tagline) {
+  // Same shape ka personality object banane ke liye
   return { pName, emoji, color, score, tagline }
 }
 
-export function getPersonality(member, expenses) {
+export function findMemberPersonality(member, expenses) {
   let total = 0
   let settledCount = 0
   let paidCount = 0
 
+  // Member ne kitna pay/settle kiya, woh count karte hai
   for (const expense of expenses) {
     const memberIsInExpense = Object.keys(expense.settled).includes(member)
 
@@ -25,8 +27,9 @@ export function getPersonality(member, expenses) {
     }
   }
 
+  // Agar data nahi hai toh default personality
   if (total === 0) {
-    return makePersonality(
+    return createPersonality(
       'New Member',
       '👋',
       COLORS.MUTED,
@@ -35,30 +38,31 @@ export function getPersonality(member, expenses) {
     )
   }
 
+  // Rate ke basis par personality decide hoti hai
   const settleRate = settledCount / total
   const payerRate = paidCount / total
 
   if (settleRate >= 0.85 && payerRate >= 0.25) {
-    return makePersonality('The Saint', '👑', COLORS.YELLOW, 98, 'Always pays first. The group MVP.')
+    return createPersonality('The Saint', '👑', COLORS.YELLOW, 98, 'Always pays first. The group MVP.')
   }
 
   if (settleRate >= 0.75) {
-    return makePersonality('The Penny Pincher', '🧮', COLORS.GREEN, 76, 'Pays exactly their share. Not a rupee more.')
+    return createPersonality('The Penny Pincher', '🧮', COLORS.GREEN, 76, 'Pays exactly their share. Not a rupee more.')
   }
 
   if (settleRate >= 0.55) {
-    return makePersonality('The Gambler', '🎲', COLORS.PURPLE, 52, 'Could pay in 2 mins or 2 weeks. Who knows.')
+    return createPersonality('The Gambler', '🎲', COLORS.PURPLE, 52, 'Could pay in 2 mins or 2 weeks. Who knows.')
   }
 
   if (settleRate >= 0.35) {
-    return makePersonality('The Chronic Delayer', '🐢', COLORS.ACCENT, 30, 'Not broke. Perpetually about to send it.')
+    return createPersonality('The Chronic Delayer', '🐢', COLORS.ACCENT, 30, 'Not broke. Perpetually about to send it.')
   }
 
   if (settleRate >= 0.15) {
-    return makePersonality('The Ghost', '👻', COLORS.MUTED, 12, 'Last seen online before the bill dropped.')
+    return createPersonality('The Ghost', '👻', COLORS.MUTED, 12, 'Last seen online before the bill dropped.')
   }
 
-  return makePersonality(
+  return createPersonality(
     'The Overdue King',
     '😇',
     COLORS.RED,
@@ -67,7 +71,8 @@ export function getPersonality(member, expenses) {
   )
 }
 
-function getPendingTotal(member, group) {
+function calculateMemberPendingDetails(member, group) {
+  // Roast me amount aur pending bills dikhane ke liye
   const unsettled = group.expenses.filter(expense => {
     return expense.settled[member] === false
   })
@@ -82,9 +87,9 @@ function getPendingTotal(member, group) {
   }
 }
 
-export function getRoast(member, group) {
-  const personality = getPersonality(member, group.expenses)
-  const pending = getPendingTotal(member, group)
+export function writeRoastForMember(member, group) {
+  const personality = findMemberPersonality(member, group.expenses)
+  const pending = calculateMemberPendingDetails(member, group)
 
   const roasts = {
     'The Ghost':

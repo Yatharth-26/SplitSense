@@ -1,6 +1,6 @@
 import { COLORS } from '../../utils/constants'
-import { getPersonality } from '../../utils/personality'
-import { getRoast } from '../../utils/personality'
+import { findMemberPersonality } from '../../utils/personality'
+import { writeRoastForMember } from '../../utils/personality'
 import { useGroups } from '../../context/GroupContext'
 
 const C = COLORS
@@ -10,11 +10,14 @@ export default function RoastModal() {
   if (!roastTarget) return null
 
   const { member, group } = roastTarget
-  const personality = getPersonality(member, group.expenses)
-  const roast       = getRoast(member, group)
+
+  // Selected member ke hisaab se roast content banta hai
+  const personality = findMemberPersonality(member, group.expenses)
+  const roast       = writeRoastForMember(member, group)
 
   return (
     <div
+      // Bahar click karne par modal close hota hai
       onClick={() => setRoastTarget(null)}
       style={{
         position:       'fixed',
@@ -29,6 +32,7 @@ export default function RoastModal() {
       }}
     >
       <div
+        // Andar click karne par modal close nahi hota
         onClick={e => e.stopPropagation()}
         className="pop-in"
         style={{

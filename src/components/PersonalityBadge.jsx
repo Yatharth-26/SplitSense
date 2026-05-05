@@ -1,7 +1,7 @@
-import { getPersonality } from '../utils/personality'
+import { findMemberPersonality } from '../utils/personality'
 
 export default function PersonalityBadge({ member, expenses }) {
-  const personality = getPersonality(member, expenses)
+  const personality = findMemberPersonality(member, expenses)
 
   return (
     <div

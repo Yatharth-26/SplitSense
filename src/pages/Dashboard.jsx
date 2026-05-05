@@ -2,7 +2,7 @@ import { useGroups } from '../context/GroupContext'
 import GroupCard from '../components/GroupCard'
 import StatCard  from '../components/StatCard'
 import { COLORS } from '../utils/constants'
-import { getTotalUnsettled, formatCurrency } from '../utils/calculations'
+import { calculateTotalPendingAmount, showRupees } from '../utils/calculations'
 
 const C = COLORS
 
@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { groups, setShowAddGrp } = useGroups()
 
   const totalUnsettled = groups.reduce(
-    (sum, g) => sum + getTotalUnsettled(g), 0
+    (sum, g) => sum + calculateTotalPendingAmount(g), 0
   )
 
   const totalExpenses = groups.reduce((sum, g) => sum + g.expenses.length, 0)
@@ -32,7 +32,7 @@ export default function Dashboard() {
       </div>
 
       <div className="stats-grid">
-        <StatCard symbol="₹" value={formatCurrency(totalUnsettled)} label="Unsettled" color={C.RED} />
+        <StatCard symbol="₹" value={showRupees(totalUnsettled)} label="Unsettled" color={C.RED} />
         <StatCard symbol="👥" value={groups.length} label="Groups" color={C.PURPLE} />
         <StatCard symbol="🧾" value={totalExpenses} label="Expenses" color={C.GREEN} />
       </div>

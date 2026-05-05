@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useGroups } from '../context/GroupContext'
 import { COLORS } from '../utils/constants'
-import { getTotalUnsettled, getPendingCount, formatCurrency } from '../utils/calculations'
+import { calculateTotalPendingAmount, countPendingPayments, showRupees } from '../utils/calculations'
 
 const C = COLORS
 
@@ -9,8 +9,8 @@ export default function GroupCard({ group, index }) {
   const navigate = useNavigate()
   const { setSelectedGroupId } = useGroups()
 
-  const unsettledAmount = getTotalUnsettled(group)
-  const pendingCount = getPendingCount(group)
+  const unsettledAmount = calculateTotalPendingAmount(group)
+  const pendingCount = countPendingPayments(group)
 
   const handleClick = () => {
     setSelectedGroupId(group.id)
@@ -45,7 +45,7 @@ export default function GroupCard({ group, index }) {
       {unsettledAmount > 0 ? (
         <div className="right-info">
           <div className="title" style={{ color: C.RED }}>
-            {formatCurrency(unsettledAmount)}
+            {showRupees(unsettledAmount)}
           </div>
           <div className="muted">
             {pendingCount} pending

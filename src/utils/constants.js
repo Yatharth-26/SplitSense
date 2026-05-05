@@ -1,4 +1,5 @@
 
+// App ke common colors yaha rakhe hai
 export const COLORS = {
   BG:      'var(--bg)',
   SURFACE: 'var(--surface)',
@@ -14,6 +15,7 @@ export const COLORS = {
 }
 
 
+// Expense categories yaha se buttons me aati hai
 export const CATEGORIES = [
   { id: 'food',      label: 'Food',      emoji: '🍕' },
   { id: 'travel',    label: 'Travel',    emoji: '🚗' },
@@ -24,16 +26,19 @@ export const CATEGORIES = [
 ]
 
 
+// New group banate time color options
 export const GROUP_COLORS = [
   '#FF6B35', '#A78BFA', '#06D6A0', '#FFD166', '#FF4560', '#38BDF8',
 ]
 
 
+// New group banate time emoji options
 export const GROUP_EMOJIS = [
   '🎉', '🏠', '🎓', '✈️', '🏖️', '🍕', '🎮', '💼', '🤝', '🎸',
 ]
 
 
+// Same input style baar-baar use karne ke liye
 export const inputStyle = {
   width:        '100%',
   background:   'var(--card)',

@@ -1,22 +1,26 @@
 import { COLORS } from '../utils/constants'
-import { formatCurrency } from '../utils/calculations'
-import { getPersonality } from '../utils/personality'
+import { showRupees } from '../utils/calculations'
+import { findMemberPersonality } from '../utils/personality'
 import { useGroups } from '../context/GroupContext'
 
 const C = COLORS
 
 export default function BalanceCard({ member, balance, group, index }) {
   const { setRoastTarget } = useGroups()
-  const personality = getPersonality(member, group.expenses)
+
+  // Member ka funny type/personality nikalta hai
+  const personality = findMemberPersonality(member, group.expenses)
+
+  // Balance ke hisaab se text aur color decide hota hai
   const status = balance > 0 ? 'gets back' : balance < 0 ? 'owes' : ''
   let balanceText = 'Even'
 
   if (balance > 0) {
-    balanceText = `+${formatCurrency(balance)}`
+    balanceText = `+${showRupees(balance)}`
   }
 
   if (balance < 0) {
-    balanceText = `-${formatCurrency(balance)}`
+    balanceText = `-${showRupees(balance)}`
   }
 
   const balanceColor = balance > 0 ? C.GREEN : balance < 0 ? C.RED : C.MUTED
@@ -56,6 +60,7 @@ export default function BalanceCard({ member, balance, group, index }) {
         </div>
 
         <button
+          // Click par roast popup khulta hai
           onClick={() => setRoastTarget({ member, group })}
           title="Roast this person"
           className="small-button"

@@ -7,6 +7,7 @@ const C = COLORS
 export default function AddExpenseModal() {
   const { selectedGroup, addExpense, setShowAddExp } = useGroups()
 
+  // Form ke saare inputs ka data yaha store hota hai
   const [form, setForm] = useState({
     name:     '',
     amount:   '',
@@ -14,15 +15,19 @@ export default function AddExpenseModal() {
     paidBy:   selectedGroup?.members[0] || '',
   })
 
-  const set = (key) => (value) => setForm(prev => ({ ...prev, [key]: value }))
+  // Same function se form ka koi bhi field update kar sakte hai
+  const updateFormField = (key) => (value) => {
+    setForm(prev => ({ ...prev, [key]: value }))
+  }
 
-  const handleSubmit = () => {
+  const saveExpense = () => {
     if (!form.name || !form.amount) return
 
-
+    // Jisne pay kiya uska settled true, baaki ka false
     const settled = {}
     selectedGroup.members.forEach(m => (settled[m] = m === form.paidBy))
 
+    // Final expense object context me bhej rahe hai
     addExpense({
       name:     form.name,
       amount:   parseFloat(form.amount),
@@ -35,6 +40,7 @@ export default function AddExpenseModal() {
 
   if (!selectedGroup) return null
 
+  // Button tabhi active dikhega jab name aur amount filled ho
   const isValid = form.name && form.amount
 
   return (
@@ -51,7 +57,7 @@ export default function AddExpenseModal() {
           <Label>Expense Name</Label>
           <input
             value={form.name}
-            onChange={e => set('name')(e.target.value)}
+            onChange={e => updateFormField('name')(e.target.value)}
             placeholder="e.g. Pizza Night"
             style={inputStyle}
           />
@@ -61,7 +67,7 @@ export default function AddExpenseModal() {
           <Label>Amount (₹)</Label>
           <input
             value={form.amount}
-            onChange={e => set('amount')(e.target.value)}
+            onChange={e => updateFormField('amount')(e.target.value)}
             type="number"
             placeholder="0"
             style={inputStyle}
@@ -74,12 +80,13 @@ export default function AddExpenseModal() {
             {CATEGORIES.map(cat => (
               <button
                 key={cat.id}
-                onClick={() => set('category')(cat.id)}
+                onClick={() => updateFormField('category')(cat.id)}
                 style={{
                   padding:      '5px 11px',
                   borderRadius: 20,
                   fontSize:     12,
                   fontWeight:   500,
+                  // Selected category orange, baaki muted/card
                   background:   form.category === cat.id ? `${C.ACCENT}25` : C.CARD,
                   color:        form.category === cat.id ? C.ACCENT : C.MUTED,
                   border:       `1px solid ${form.category === cat.id ? C.ACCENT : C.BORDER}`,
@@ -95,7 +102,7 @@ export default function AddExpenseModal() {
           <Label>Paid By</Label>
           <select
             value={form.paidBy}
-            onChange={e => set('paidBy')(e.target.value)}
+            onChange={e => updateFormField('paidBy')(e.target.value)}
             style={{ ...inputStyle, appearance: 'none' }}
           >
             {selectedGroup.members.map(m => (
@@ -105,7 +112,7 @@ export default function AddExpenseModal() {
         </div>
 
                 <button
-          onClick={handleSubmit}
+          onClick={saveExpense}
           style={{
             background:    C.ACCENT,
             color:         '#fff',

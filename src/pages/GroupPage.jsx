@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGroups } from '../context/GroupContext'
 import { COLORS, CATEGORIES } from '../utils/constants'
-import { calcBalances } from '../utils/calculations'
+import { calculateMemberBalances } from '../utils/calculations'
 import ExpenseCard from '../components/ExpenseCard'
 import BalanceCard from '../components/BalanceCard'
 import GroupStats from '../components/GroupStats'
@@ -30,7 +30,7 @@ export default function GroupPage() {
     return null
   }
 
-  const balances = calcBalances(group)
+  const balances = calculateMemberBalances(group)
 
   const sortedExpenses = [...group.expenses].sort(
     (a, b) => new Date(b.date) - new Date(a.date)

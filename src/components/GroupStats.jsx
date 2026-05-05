@@ -1,5 +1,5 @@
 import { COLORS, CATEGORIES } from '../utils/constants'
-import { formatCurrency } from '../utils/calculations'
+import { showRupees } from '../utils/calculations'
 
 const C = COLORS
 
@@ -53,7 +53,7 @@ export default function GroupStats({ group }) {
             ₹ Total Spent
           </div>
           <div className="title" style={{ color: C.YELLOW, fontSize: 20 }}>
-            {formatCurrency(total)}
+            {showRupees(total)}
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export default function GroupStats({ group }) {
             <div className="title" style={{ color: C.ACCENT }}>
               {biggest.name}
             </div>
-            <div className="muted">{formatCurrency(biggest.amount)}</div>
+            <div className="muted">{showRupees(biggest.amount)}</div>
           </div>
         )}
       </div>
@@ -81,7 +81,7 @@ export default function GroupStats({ group }) {
               <span style={{ fontSize: 13 }}>{cat.emoji} {cat.label}</span>
             </div>
             <div style={{ fontSize: 13, fontWeight: 600 }}>
-              {formatCurrency(cat.total)}
+              {showRupees(cat.total)}
             </div>
           </div>
         ))}
@@ -96,7 +96,7 @@ export default function GroupStats({ group }) {
           <div key={name} className="space-between" style={{ marginBottom: 8 }}>
             <div style={{ fontSize: 13 }}>{name}</div>
             <div style={{ fontSize: 13, fontWeight: 600 }}>
-              {formatCurrency(paid)}
+              {showRupees(paid)}
             </div>
           </div>
         ))}
