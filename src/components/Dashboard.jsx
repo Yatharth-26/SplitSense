@@ -195,46 +195,6 @@ export default function Dashboard({ groups, expenses, settlements, openGroup, on
           )}
         </div>
       </div>
-
-      {/* Recent activity */}
-      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "16px 20px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 style={{ fontFamily: "var(--font-head)", fontSize: 16, fontWeight: 700 }}>Recent Activity</h2>
-          <button className="btn btn-primary" style={{ fontSize: 12, padding: "6px 14px" }} onClick={onAddExpense}>+ Add Expense</button>
-        </div>
-        {recentExpenses.length === 0 ? (
-          <div style={{ padding: 32, textAlign: "center", color: "var(--text2)" }}>No expenses yet</div>
-        ) : (
-          recentExpenses.map((exp) => {
-            const group = groups.find((g) => g.id === exp.groupId);
-            const color = CAT_COLORS[exp.category] || "#888";
-            return (
-              <div key={exp.id} style={{
-                padding: "12px 20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottom: "1px solid var(--border)",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{
-                    width: 8, height: 8, borderRadius: "50%", background: color, flexShrink: 0,
-                  }} />
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 500 }}>{exp.description}</div>
-                    <div style={{ fontSize: 12, color: "var(--text2)" }}>
-                      {group?.name} · paid by {exp.paidBy} · {exp.date}
-                    </div>
-                  </div>
-                </div>
-                <div style={{ fontFamily: "var(--font-head)", fontWeight: 700, fontSize: 15 }}>
-                  {formatCurrency(exp.amount)}
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
     </div>
   );
 }
