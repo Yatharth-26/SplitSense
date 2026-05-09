@@ -171,7 +171,7 @@ npm run preview
 
 ## Important Notes
 
-- This is a frontend-only project.
+- This is a frontend only project.
 - There is no backend.
 - There is no login/authentication system.
 - There is no external API.
